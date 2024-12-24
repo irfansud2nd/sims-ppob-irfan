@@ -18,8 +18,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | SIMS PPOB IRFAN",
-    default: "SIMS PPOB IRFAN",
+    template: "%s | SIMS PPOB-IRFAN",
+    default: "SIMS PPOB-IRFAN",
   },
 };
 

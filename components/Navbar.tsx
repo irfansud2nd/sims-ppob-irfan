@@ -33,7 +33,7 @@ const Navbar = () => {
           className="font-semibold text-lg flex items-center gap-x-2"
         >
           <img src={logo.src} className="rounded-full size-8" />
-          SIMS PPOB IRFAN
+          SIMS PPOB-IRFAN
         </Link>
         <div className="flex gap-x-3 max-sm:hidden">
           {links.map((link) => (
