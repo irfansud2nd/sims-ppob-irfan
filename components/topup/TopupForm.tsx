@@ -1,7 +1,7 @@
 "use client";
 
 import useModal from "@/hooks/useModal";
-import { formatToRupiah, toastError } from "@/lib/functions";
+import { formatToRupiah, getErrorMsg, toastError } from "@/lib/functions";
 import {
   TopupSchema,
   topupSchema,
@@ -50,8 +50,7 @@ const TopupForm = () => {
       dispatch(addBalance(data.amount));
       reset();
     } catch (error) {
-      showModal("Top Up sebesar", "error", data.amount);
-      toastError(error);
+      showModal(getErrorMsg(error, "Top Up sebesar"), "error", data.amount);
     }
   };
 

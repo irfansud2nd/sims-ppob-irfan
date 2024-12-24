@@ -8,6 +8,7 @@ import { useRef, useState } from "react";
 import { Pencil } from "lucide-react";
 import axiosInstance from "@/lib/axiosInstance";
 import useModal from "@/hooks/useModal";
+import { getErrorMsg } from "@/lib/functions";
 
 const ChangeProfilePic = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,9 +48,7 @@ const ChangeProfilePic = () => {
       dispatch(setUser(response.data.data));
       showModal("Memperbaharui foto profil", "success");
     } catch (error) {
-      let msg = "Memperbaharui foto profil";
-      if (typeof error == "string") msg = error;
-      showModal(msg, "error");
+      showModal(getErrorMsg(error, "Memperbaharui foto profil"), "error");
     } finally {
       setIsSubmitting(false);
     }

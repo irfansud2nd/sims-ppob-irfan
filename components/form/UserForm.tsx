@@ -14,7 +14,7 @@ import axios from "axios";
 import { baseApiUrl } from "@/lib/constants";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { toastError } from "@/lib/functions";
+import { getErrorMsg, toastError } from "@/lib/functions";
 import axiosInstance from "@/lib/axiosInstance";
 import { useEffect } from "react";
 import useModal from "@/hooks/useModal";
@@ -91,7 +91,7 @@ const UserForm = ({ profile, readOnly }: Props) => {
       if (profile) {
         toastError(error);
       } else {
-        showModal("Memperbaharui profil", "error");
+        showModal(getErrorMsg(error, "Memperbaharui profil"), "error");
       }
     }
   };

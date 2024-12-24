@@ -2,18 +2,22 @@ import { toast } from "sonner";
 import axiosInstance from "./axiosInstance";
 import { Service } from "./redux/serviceSlice";
 import { User } from "./redux/userSlice";
+import { AxiosError } from "axios";
 
 export const toastError = (error: any, id?: string | number) => {
-  if (typeof error == "string") {
-    toast.error(error, { id });
-    return;
-  }
-  let errorObj = error.response.data as {
-    message: string;
-    status: number;
-  };
+  const msg = getErrorMsg(error);
+  toast.error(msg, { id });
+};
 
-  toast.error(errorObj.message + " | " + errorObj.status, { id });
+export const getErrorMsg = (
+  error: any,
+  fallback: string = "Something went wrong"
+) => {
+  if (typeof error == "string") return error;
+  if (error instanceof AxiosError) {
+    return error.response?.data.message + " | " + error.response?.data.status;
+  }
+  return fallback;
 };
 
 export const formatToRupiah = (input: string | number, rerverse?: boolean) => {

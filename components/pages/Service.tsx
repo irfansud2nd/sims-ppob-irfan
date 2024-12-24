@@ -1,6 +1,11 @@
 "use client";
 import axiosInstance from "@/lib/axiosInstance";
-import { fetchBalance, fetchServices, toastError } from "@/lib/functions";
+import {
+  fetchBalance,
+  fetchServices,
+  getErrorMsg,
+  toastError,
+} from "@/lib/functions";
 import { setService } from "@/lib/redux/serviceSlice";
 import { RootState } from "@/lib/redux/store";
 import { useEffect, useState } from "react";
@@ -56,13 +61,7 @@ const Service = ({ code }: { code: string }) => {
       if (balance !== balanceRedux) dispatch(setBalance(balance));
 
       if (balance < service.service_tariff) {
-        showModal(
-          `Saldo tidak mencukupi untuk pembayaran ${service.service_name} sebesar`,
-          "error",
-          service.service_tariff
-        );
-        setIsSubmitting(false);
-        return;
+        throw `Saldo tidak mencukupi untuk pembayaran ${service.service_name} sebesar`;
       }
 
       showModal("Memperoses pembayaran", "loading");
@@ -73,8 +72,7 @@ const Service = ({ code }: { code: string }) => {
       showModal(title, "success", service.service_tariff);
       dispatch(reduceBalance(service.service_tariff));
     } catch (error) {
-      showModal(title, "error", service.service_tariff);
-      toastError(error);
+      showModal(getErrorMsg(error, title), "error", service.service_tariff);
     } finally {
       setIsSubmitting(false);
     }
